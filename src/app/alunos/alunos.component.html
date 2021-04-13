@@ -1,0 +1,79 @@
+
+<div class="row">
+
+  <div class="col-sm-6" *ngIf="alunoSelecionado">
+    <div class="row">
+      <div class="mr-auto">
+        <app-titulo [titulo]="'Id Aluno: ' + alunoSelecionado.id"></app-titulo>
+      </div>
+      <div class="mt-1">
+        <button class="btn btn-sm btn-outline-danger" (click)="voltar()">Fechar</button>
+      </div>
+    </div>
+    <form [formGroup]="alunoForm" (ngSubmit)="alunoSubmit()">
+      <div class="form-group">
+        <label for="formGroupExempleInput">Nome</label>
+        <input type="text" formControlName="nome" class="form-control" aria-label="First name">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExempleInput2">Sobrenome</label>
+        <input type="text" formControlName="sobrenome" class="form-control" aria-label="Last name">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExempleInput2">Telefone</label>
+        <input type="text" formControlName="telefone" class="form-control" aria-label="Last name">
+      </div>
+      <div class="form-group">
+        <hr>
+        <button class="btn btn-success" [disabled]="!alunoForm.valid" >Enviar</button>
+      </div>
+    </form>
+  </div>
+
+  <div [ngClass]="{'col-sm-6':alunoSelecionado, 'col-sm-12':!alunoSelecionado}" >
+    <app-titulo [titulo]="titulo"></app-titulo>
+    <table class="table table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Sobrenome</th>
+          <th scope="col">Telefone</th>
+          <th scope="col">Opções</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let aluno of alunos" >
+          <th scope="row">{{aluno.id}}</th>
+          <td>{{aluno.nome}}</td>
+          <td>{{aluno.sobrenome}}</td>
+          <td>{{aluno.telefone}}</td>
+          <td>
+            <div class="btn-group">
+              <button (click)="alunoSelect(aluno)" class="btn btn-sm btn-outline-warning">Detalhes</button>
+              <button (click)="openModal(template)" class="btn btn-sm btn-outline-primary">Professores</button>
+              <button class="btn btn-sm btn-outline-danger">Desativar</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #template>
+
+  <div class="modal-body">
+    <app-professores></app-professores>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn pull-right" aria-label="Close" (click)="modalRef.hide()">
+     Fechar
+    </button>
+  </div>
+</ng-template>
+
+
+
+
+
